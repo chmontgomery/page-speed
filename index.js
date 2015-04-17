@@ -1,9 +1,9 @@
 var bluebird = require('bluebird');
 var psi = bluebird.promisify(require('psi'));
 var chalk = require('chalk');
-var URL = 'https://store.wsj.com';
-var MOBILE_THRESHOLD = 50;
-var DESKTOP_THRESHOLD = 79;
+var URL = process.env.PSI_URL; //'https://store.wsj.com'
+var MOBILE_THRESHOLD = process.env.PSI_MOBILE_THRESHOLD; //50
+var DESKTOP_THRESHOLD = process.env.PSI_DESKTOP_THRESHOLD; //79
 
 bluebird.settle([
   psi(URL, {
