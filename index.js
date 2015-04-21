@@ -5,7 +5,7 @@ var URL = process.env.PSI_URL; //'https://store.wsj.com'
 var MOBILE_THRESHOLD = process.env.PSI_MOBILE_THRESHOLD; //50
 var DESKTOP_THRESHOLD = process.env.PSI_DESKTOP_THRESHOLD; //79
 
-bluebird.settle([
+bluebird.join(
   psi(URL, {
     nokey: 'true',
     strategy: 'mobile'
@@ -14,10 +14,8 @@ bluebird.settle([
     nokey: 'true',
     strategy: 'desktop'
   })
-])
-  .then(function (results) {
-    var mobile = results[0].value();
-    var desktop = results[1].value();
+)
+  .spread(function (mobile, desktop) {
     var isError = false;
 
     console.log('=== MOBILE ===');
